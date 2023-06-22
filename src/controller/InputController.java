@@ -25,7 +25,10 @@ public class InputController {
         return str1.equalsIgnoreCase(str2);
     }
 
-    public static String cleanerInput(String input) {
+    public static String cleanerInputSingleWord(String input) {
+        return input.trim().replaceAll( "\s+", "");
+    }
+    public static String cleanerInputMultipleWord(String input) {
         return input.trim().toLowerCase();
     }
 

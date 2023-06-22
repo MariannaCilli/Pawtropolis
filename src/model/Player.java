@@ -1,6 +1,7 @@
 
 package model;
 
+
 import java.util.List;
 
 public class Player {
@@ -11,25 +12,22 @@ public class Player {
     private String name;
     private int lifePoints;
 
-    private Bag bag;
+    private final Bag bag;
 
     public Player(String name, int lifePoints, Bag bag) {
         this.name = name;
         this.lifePoints = lifePoints;
-        this.bag = bag;
+        this.bag=bag;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getLifePoints() {
         return lifePoints;
-    }
+    }  // lo lascio non si sa mia serve nelle fasi successive
 
     public void setLifePoints(int lifePoints) {
         if (lifePoints > MAX_LIFE_POINTS) {
@@ -55,28 +53,37 @@ public class Player {
     // il player da qualcosa (es giveItemByname), non so se in player fare il metodo take e give generico e implementarli nel gameController
     // del tipo il player prende e da , m cosa??!!, in gamecontroller potrei avere GiveItem....
 
-//metodo che restuisce gli item diosponibili presso di lui, restuisce a showbag ciò che ha nella borsa(o altro)
+
 
     public Item takeItem(Item item) {
-        return bag.addItemInBag(item);
+        return bag.addItem(item);
     }
 
-    public void giveItemByName(Item item) {  //cambio di stato
+    public void giveItem(Item item) {
 
         List<Item> items = bag.getItems();
 
         if (items.contains(item)) {
-            bag.dropItemsFromBag(item);
+            bag.removeItem(item);
 
         }
     }
 
-    public Bag getBag() {
-        return bag;
-    } //TODO da togliere
 
-    public void setBag(Bag bag) {
-        this.bag = bag;
+    public boolean hasItem(Item item) {   //con questo metodo credo di non avere più bisogno del getBag
+        List<Item> items = bag.getItems();
+        return items.contains(item);
+    }
+
+    public String showBag() {
+        return bag.showBag();
+    }//metodo che restuisce gli item diosponibili presso di lui, restuisce a showbag ciò che ha nella borsa(o altro)
+
+    public List<Item> getItemsInBag() {
+        return bag.getItems();
+    }
+    public int getAvailableSpaceInBag() {
+        return bag.getAvailableSpace();
     }
 }
 

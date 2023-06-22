@@ -17,17 +17,25 @@ public class ShowBagCommand implements GameCommand{
     @Override
     public void execute () {
 
-        List <Item> items = gameController.getPlayer().getBag().getItems();
+        List <Item> items = gameController.getPlayer().getItemsInBag();
         if (items.isEmpty()) {
             System.out.println("\nYour bag is empty");
 
         } else {
-            System.out.print("\nIn bag: ");
-            gameController.getPlayer().getBag().showBag();
+            System.out.print("\nIn bag: "+ gameController.getPlayer().showBag());
+           // gameController.getPlayer().showBag();
+           // for (int i = 0; i < items.size(); i++) {
+           //    System.out.print(items.get(i).getName());
+           //     if (i < items.size()-1) {
+           //         System.out.print(", ");
+           //     }
+
+          //  }
 
             }
 
-        System.out.println("\nRemaining space in bag: " + gameController.getPlayer().getBag().getAvailableSpace());
+
+        System.out.println("\nRemaining space in bag: " + gameController.getPlayer().getAvailableSpaceInBag());
     }
 
    }

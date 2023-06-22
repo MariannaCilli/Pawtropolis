@@ -20,7 +20,7 @@ public class DropCommand implements GameCommand {
     }
 
     public void execute() {
-        List <Item> items = gameController.getPlayer().getBag().getItems();
+        List <Item> items = gameController.getPlayer().getItemsInBag();
         Scanner scanner = new Scanner(System.in);
 
         if (items.isEmpty()) {
@@ -38,11 +38,12 @@ public class DropCommand implements GameCommand {
             }
         }                                                                   // fatto!       //l aggiunta dell'iem (o rimozione nell' addCommand) lo deve farew
         if (selectedItem != null) {                                 //fatto!           //il metodo execute e non il dropItemFromBag sennò se chiamava
-            gameController.getPlayer().giveItemByName(selectedItem);//dropItemFromBag&GetToRoom
+            gameController.getPlayer().giveItem(selectedItem);//dropItemFromBag&GetToRoom
       gameController.getMapController().getCurrentRoom().addItem(selectedItem);
             System.out.println("\nThe item has been dropped from the bag: " + selectedItem.getName());
-            System.out.println((selectedItem.getName() + " has been added in  the room"));
-            System.out.print(("Now the available space in your bag is: " + gameController.getPlayer().getBag().getAvailableSpace() ));
+            System.out.println((selectedItem.getName() + " has been added in  the room " + gameController.getMapController().getCurrentRoom().getName()));
+            System.out.print(("Now the available space in your bag is: " + gameController.getPlayer().getAvailableSpaceInBag() ));
+            System.out.println();
         } else {                                                                                                            //ghahhahahahah
             System.out.println("\nItem not found in your bag: " + itemName);
         }

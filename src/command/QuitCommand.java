@@ -3,6 +3,6 @@ package command;
 public class QuitCommand {
 
     public void execute(){
-        System.out.println("See you next time!");
+        System.out.println("\nSee you next time!");
     }
 }
