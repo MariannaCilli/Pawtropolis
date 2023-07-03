@@ -1,4 +1,6 @@
-package console;
+package view;
+
+import controller.TextGame;
 
 public class Main {
 

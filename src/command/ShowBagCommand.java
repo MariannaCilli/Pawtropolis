@@ -1,42 +1,25 @@
 package command;
 
-
 import controller.GameController;
-import model.Item;
+import view.BagView;
 
-import java.util.List;
+public class ShowBagCommand implements GameCommand {
 
-public class ShowBagCommand implements GameCommand{
+    private final GameController gameController;
 
-    private GameController gameController;;
-
-    public ShowBagCommand (GameController gameController) {
+    public ShowBagCommand(GameController gameController) {
         this.gameController = gameController;
     }
 
     @Override
-    public void execute () {
-
-        List <Item> items = gameController.getPlayer().getItemsInBag();
+    public void execute() {
+        BagView bagView = new BagView();
+        String items = gameController.getPlayer().showBag();
+        int availableSpace = gameController.getPlayer().getAvailableSpaceInBag();
         if (items.isEmpty()) {
-            System.out.println("\nYour bag is empty");
-
+            bagView.displayEmptyBag();
         } else {
-            System.out.print("\nIn bag: "+ gameController.getPlayer().showBag());
-           // gameController.getPlayer().showBag();
-           // for (int i = 0; i < items.size(); i++) {
-           //    System.out.print(items.get(i).getName());
-           //     if (i < items.size()-1) {
-           //         System.out.print(", ");
-           //     }
-
-          //  }
-
-            }
-
-
-        System.out.println("\nRemaining space in bag: " + gameController.getPlayer().getAvailableSpaceInBag());
+            bagView.displayBag(items, availableSpace);
+        }
     }
-
-   }
-
+}

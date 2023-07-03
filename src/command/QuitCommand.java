@@ -1,8 +1,12 @@
 package command;
 
-public class QuitCommand {
+import view.ConsoleView;
 
+public class QuitCommand implements GameCommand {
+
+    @Override
     public void execute(){
-        System.out.println("\nSee you next time!");
+        ConsoleView consoleView = new ConsoleView();
+        consoleView.displayQuitCommand();
     }
 }

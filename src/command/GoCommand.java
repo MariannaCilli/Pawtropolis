@@ -3,49 +3,56 @@ package command;
 import model.Direction;
 import controller.GameController;
 import model.Room;
+import view.DirectionView;
+import view.RoomView;
 
 public class GoCommand implements GameCommand {
 
-    private GameController gameController;
-    private String direction;
+    private final GameController gameController;
+    private final String direction;
 
     public GoCommand(GameController gameController, String direction) {
         this.gameController = gameController;
-        this.direction= direction;
+        this.direction = direction;
+
     }
 
     @Override
     public void execute() {
+        DirectionView directionView = new DirectionView();
+        RoomView roomView = new RoomView();
+        Direction dir = Direction.getDirectionFromString(direction);
 
-        Direction direction;
-        switch (this.direction) {
-            case "north":
-                direction = Direction.NORTH;
-                break;
-            case "south":
-                direction = Direction.SOUTH;
-                break;
-            case "east":
-                direction = Direction.EAST;
-                break;
-            case "west":
-                direction = Direction.WEST;
-                break;
-            default:
-                System.out.println("\nInvalid direction. Choose a valid direction: north, south, east, west");
-                return;
+        if (dir == null) {
+            directionView.displayNotFoundDirection();
+            return;
         }
 
         Room currentRoom = gameController.getMapController().getCurrentRoom();
-        Room newRoom = currentRoom.getAdjoiningDirectionRoom(Direction.getDirectionFromString(direction.getDirectionString()));
-        if (newRoom != null) {
-            gameController.getMapController().setCurrentRoom(newRoom);
-            System.out.println("\nYou have entered " + newRoom.getName());
+        Room nextRoom = currentRoom.getAdjoiningDirectionRoom(dir);
 
-            LookCommand lookCommand = new LookCommand(gameController);
-            lookCommand.execute();
-        } else {
-            System.out.println("\nThere is no room in that direction");
+        if (nextRoom != null) {
+            gameController.getMapController().setCurrentRoom(nextRoom);
+            directionView.displayNameCurrentRoom(nextRoom.getName());
+
+            String items = gameController.getMapController().getCurrentRoom().getAllItems();
+            String animals = gameController.getMapController().getCurrentRoom().getAllAnimals();
+
+
+            if (items.isEmpty()) {
+                roomView.displayAbsenceItemInRoom();
+            } else {
+                roomView.displayItemInRoom(items);
+            }
+
+            if (animals.isEmpty()) {
+                roomView.displayAbsenceAnimalInRoom();
+            } else {
+                roomView.displayAnimalInRoom(animals);
+            }
+        }
+        if (nextRoom == null) {
+            directionView.displayNotFoundRoom();
         }
     }
 
